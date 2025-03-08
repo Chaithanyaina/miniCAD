@@ -1,0 +1,36 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
+
+# Logs
+logs
+*.log
+logs/
+*.out
+*.err
+
+# Build files
+/dist
+/build
+/out
+.next
+.DS_Store
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+
+# OS-generated files
+Thumbs.db
+.DS_Store
+
+# Backend-specific
+backend/node_modules/
+backend/.env
+
+# Frontend-specific
+frontend/node_modules/
+frontend/.env
