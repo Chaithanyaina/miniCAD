@@ -22,6 +22,9 @@ import { CloudUpload, Download, Brightness4, Brightness7 } from "@mui/icons-mate
 import { styled } from "@mui/system";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
+// ✅ Set up a dynamic API URL for both development & production
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 // Themes
 const lightTheme = createTheme({ palette: { mode: "light", primary: { main: "#1976d2" } } });
 const darkTheme = createTheme({ palette: { mode: "dark", primary: { main: "#90caf9" } } });
@@ -46,17 +49,17 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
-  // Fetch models from backend
+  // ✅ Fetch models from backend
   const fetchModels = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/models");
+      const res = await axios.get(`${API_BASE_URL}/api/models`);
       setModels(res.data);
     } catch (error) {
       console.error("Fetch error:", error);
     }
   };
 
-  // Upload function
+  // ✅ Handle file upload
   const handleUpload = async (selectedFile) => {
     if (!selectedFile) return;
 
@@ -65,7 +68,7 @@ export default function App() {
       const formData = new FormData();
       formData.append("model", selectedFile);
 
-      await axios.post("http://localhost:5000/api/models", formData, {
+      await axios.post(`${API_BASE_URL}/api/models`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       await fetchModels();
@@ -76,16 +79,12 @@ export default function App() {
     }
   };
 
-  // Export function
+  // ✅ Handle exporting model
   const handleExport = async () => {
     if (!models.length) return;
 
     try {
-      window.open(
-        `http://localhost:5000/api/models/export/${models[0]._id}`,
-        "_blank",
-        "noopener,noreferrer"
-      );
+      window.open(`${API_BASE_URL}/api/models/export/${models[0]._id}`, "_blank");
     } catch (error) {
       console.error("Export failed:", error);
     }

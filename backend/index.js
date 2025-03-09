@@ -19,7 +19,16 @@ cloudinary.v2.config({
 const app = express();
 
 // Middleware
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5173", // Local Vite frontend
+  "https://mini-auto-cad.vercel.app/" // Replace with your Vercel frontend URL
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true // If using cookies or authentication
+}));
+
 app.use(express.json());
 
 // MongoDB Connection
